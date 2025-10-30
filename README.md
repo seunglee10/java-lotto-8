@@ -76,12 +76,12 @@
 ---
 
 ## 예외 상황
-| 구분     | 조건                     | 예외 |
-|--------|------------------------|------|
-| 구매 금액 오류 | 1,000원 미만 또는 1,000으로 나누어 떨어지지 않음 | `IllegalArgumentException` |
-| 당첨 번호 입력 오류| 숫자가 아님, 중복됨, 개수가 6개가 아님| `IllegalArgumentException` |
-| 숫자 범위 오류 | 1~45 범위를 벗어남           | `IllegalArgumentException` |
-| 보너스 번호 오류  | 숫자가 아님, 당첨 번호와 중복됨, 범위 벗어남| `IllegalArgumentException` |
+| 구분     | 조건                          | 예외 |
+|--------|-----------------------------|------|
+| 구매 금액 오류 | 1,000원 미만 또는 1,000원 단위가 아님  | `IllegalArgumentException` |
+| 당첨 번호 입력 오류| 숫자가 아님, 중복됨, 개수가 6개가 아님     | `IllegalArgumentException` |
+| 숫자 범위 오류 | 1~45 범위를 벗어남                | `IllegalArgumentException` |
+| 보너스 번호 오류  | 숫자가 아님, 당첨 번호와 중복됨, 범위 벗어남  | `IllegalArgumentException` |
 
 
 ---
@@ -90,3 +90,79 @@
 - camp.nextstep.edu.missionutils에서 제공하는 Randoms 및 Console API를 사용하여 구현해야 한다.
 - Random 값 추출은 camp.nextstep.edu.missionutils.Randoms의 pickUniqueNumbersInRange()를 활용한다.
 - 사용자가 입력하는 값은 camp.nextstep.edu.missionutils.Console의 readLine()을 활용한다.
+
+
+
+#  로또 (Lotto) 미션 구현
+
+##  기능 목록 (구현할 내용)
+
+### 1. 로또 구입
+- 사용자로부터 **구입 금액**을 입력받는다.
+- 로또 1장의 가격은 **1,000원**이다.
+- 구입 금액에 해당하는 만큼 로또를 발행해야 한다.
+- 잘못된 값을 입력할 경우 **`IllegalArgumentException`**을 발생시키고, `"[ERROR]"`로 시작하는 에러 메시지를 출력 후 그 부분부터 입력을 다시 받는다.
+
+### 2. 로또 발행 (자동 생성)
+- 발행한 로또 수량만큼 로또를 생성한다.
+- 로또 번호의 숫자 범위는 **1~45까지**이다.
+- 1개의 로또를 발행할 때 **중복되지 않는 6개의 숫자**를 뽑는다.
+- 생성된 로또 번호들을 **오름차순**으로 정렬하여 출력한다.
+
+### 3. 당첨 번호 및 보너스 번호 입력
+- 당첨 번호 6개와 보너스 번호 1개를 입력받는다.
+  - 당첨 번호는 **쉼표(,)**를 기준으로 구분하여 입력받는다.
+
+### 4. 당첨 결과 계산 및 출력
+- 사용자가 구매한 로또 번호와 당첨 번호를 비교하여 **당첨 내역** 및 **수익률**을 출력하고 로또 게임을 종료한다.
+- **당첨 통계**를 아래 기준에 따라 출력한다:
+    - 6개 번호 일치 (1등 / 2,000,000,000원) 
+    - 5개 번호 + 보너스 번호 일치 (2등 / 30,000,000원) 
+    - 5개 번호 일치 (3등 / 1,500,000원) 
+    - 4개 번호 일치 (4등 / 50,000원) 
+    - 3개 번호 일치 (5등 / 5,000원) 
+- 수익률은 **소수점 둘째 자리에서 반올림**하여 출력한다.
+
+### 5. 예외 처리
+- 사용자 입력 시 잘못된 값이 입력되면 **`IllegalArgumentException`**을 발생시키고, `"[ERROR]"`로 시작하는 에러 메시지를 출력 후 입력을 다시 받는다.
+- `Exception`이 아닌 **`IllegalArgumentException`**, **`IllegalStateException`** 등과 같은 명확한 유형을 처리한다.
+
+---
+
+## 📁 프로젝트 구조 (트리)
+
+```text
+lotto-program/
+├── src/
+│   └── main/
+│       └── java/
+│           └── lotto/
+│               ├── Application.java              
+│               │
+│               ├── controller/
+│               │   └── LottoController.java
+│               │
+│               ├── exception/
+│               │   ├── ErrorCode.java            
+│               │   └── LottoException.java
+│               │
+│               ├── factory/
+│               │   └── LottoFactory.java
+│               │
+│               ├── model/
+│               │   ├── Lotto.java
+│               │   ├── Lottos.java
+│               │   ├── WinningLotto.java
+│               │   └── Rank.java                   
+│               │
+│               ├── validator/
+│               │   ├── InputValidator.java
+│               │   └── LottoValidator.java
+│               │
+│               └── view/
+│                   ├── InputView.java
+│                   └── OutputView.java
+
+
+```
+
