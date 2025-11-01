@@ -1,40 +1,34 @@
 package lotto.model;
 
-import lotto.validator.InputValidator;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
+
+import static lotto.validator.InputValidator.*;
 
 public class Parser {
-    private static final String DELIMITER = ",";
-
     public static int parsePurchaseAmount(String input) {
-        InputValidator.validateNotEmpty(input);
-        InputValidator.validateNumeric(input);
-        return Integer.parseInt(input);
+        validateEmpty(input);
+        int purchaseAmount = validateNumeric(input);
+        validatePositiveNumber(purchaseAmount);
+        validatePurchaseAmount(purchaseAmount);
+        return purchaseAmount;
     }
 
-    public static List<Integer> parseWinningNumbers(String input) {
-        InputValidator.validateNotEmpty(input);
-        InputValidator.validateDelimiter(input, DELIMITER);
-
-        String[] tokens = input.split(DELIMITER);
-
-        return Arrays.stream(tokens)
-                .map(String::trim)
-                .map(Parser::parseNumberToken)
-                .collect(Collectors.toList());
+    public static List<Integer> parseLotto(String input) {
+        validateEmpty(input);
+        String[] splitInput = input.split(",");
+        validateLottoNumberCount(splitInput);
+        validateLottoEmpty(splitInput);
+        List<Integer> lottoList = validateLottoNumeric(splitInput);
+        validateLottoNumbers(lottoList);
+        validateDuplicateLotto(lottoList);
+        return lottoList;
     }
 
-
-    public static int parseBonusNumber(String input) {
-        InputValidator.validateNotEmpty(input);
-        InputValidator.validateNumeric(input);
-        return Integer.parseInt(input);
-    }
-
-    private static int parseNumberToken(String token) {
-        InputValidator.validateWinningNumberNumeric(token);
-        return Integer.parseInt(token);
+    public static int parseBonus(String input) {
+        validateEmpty(input);
+        int bonus = validateNumeric(input);
+        validatePositiveNumber(bonus);
+        validateLottoNumberRange(bonus);
+        return bonus;
     }
 }
