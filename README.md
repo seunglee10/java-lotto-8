@@ -152,7 +152,7 @@ lotto-program/
 │               ├── model/
 │               │   ├── Lotto.java
 │               │   ├── Lottos.java
-│               │   ├── WinningLotto.java
+│               │   ├── Parser.java
 │               │   └── Rank.java                   
 │               │
 │               ├── validator/

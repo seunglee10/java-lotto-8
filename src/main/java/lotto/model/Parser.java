@@ -10,7 +10,7 @@ public class Parser {
         int purchaseAmount = validateNumeric(input);
         validatePositiveNumber(purchaseAmount);
         validatePurchaseAmount(purchaseAmount);
-        return purchaseAmount;
+        return purchaseAmount/1000;
     }
 
     public static List<Integer> parseLotto(String input) {
