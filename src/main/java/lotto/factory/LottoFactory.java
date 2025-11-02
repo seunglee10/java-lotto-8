@@ -7,22 +7,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LottoFactory {
-
-    private static final int LOTTO_PRICE = 1000;
-
-    public Lotto generateRandomLotto() {
-        List<Integer> numbers = Randoms.pickUniqueNumbersInRange(1, 45, 6);
+    public Lotto generateLotto() {
+        List<Integer> numbers = Randoms.pickUniqueNumbersInRange(1,45,6);
         return new Lotto(numbers);
     }
-    public List<Lotto> generateLottos(int purchaseAmount) {
 
-        int lottoCount = purchaseAmount/LOTTO_PRICE;
-        List<Lotto> lottoList = new ArrayList<>();
-
-        for (int i = 0; i < lottoCount; i++) {
-            Lotto newLotto = this.generateRandomLotto();
-            lottoList.add(newLotto);
+    public List<Lotto> generateLottos(int lottoCount) {
+        List<Lotto> lottos = new ArrayList<>();
+        for(int i =0; i<lottoCount; i++) {
+            Lotto newLotto = generateLotto();
+            lottos.add(newLotto);
         }
-        return lottoList;
+        return lottos;
     }
 }

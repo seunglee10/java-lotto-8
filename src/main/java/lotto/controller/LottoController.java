@@ -2,13 +2,13 @@ package lotto.controller;
 
 import java.util.List;
 
+import lotto.factory.LottoFactory;
 import lotto.model.Lotto;
 import lotto.view.InputView;
 //import lotto.view.OutputView;
 
 import static lotto.model.Parser.*;
 import static lotto.validator.InputValidator.validateDuplicateBonus;
-
 public class LottoController {
 
     private final InputView inputView = new InputView();
@@ -16,7 +16,7 @@ public class LottoController {
 
     public void run(){
         String parsePurchaseAmountInput = inputView.PurchaseAmount();
-        int purchaseAmount = parsePurchaseAmount(parsePurchaseAmountInput);
+        int lottoCount = parsePurchaseAmount(parsePurchaseAmountInput);
 
         String winningNumberInput = inputView.WinningNumber();
         List<Integer> WinningNumber = parseLotto(winningNumberInput);
@@ -25,6 +25,13 @@ public class LottoController {
         String bonusInput = inputView.BonusNumber();
         int bonus = parseBonus(bonusInput);
         validateDuplicateBonus(winningLotto, bonus);
+
+        LottoFactory lottofactory = new LottoFactory();
+        List<Lotto> lottos = lottofactory.generateLottos(lottoCount);
+        for ( Lotto lotto : lottos){
+            System.out.println("Hello World");
+        }
+
 
         // 가격 입력 받기
         // 가격 입력 검증
