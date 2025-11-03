@@ -77,24 +77,4 @@ public class InputValidatorTest {
                 .hasMessageStartingWith("[ERROR]");
     }
 
-    @Test
-    @DisplayName("로또 번호에 중복된 값 입력하면 예외 발생")
-    void Duplicate_Lotto_Number_Should_Throw_Exception() {
-        List<Integer> input = List.of(1,2,3,3,5,6);
-        assertThatThrownBy(() -> InputValidator.validateDuplicateLotto(input))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageStartingWith("[ERROR]");
-    }
-
-    @Test
-    @DisplayName("로또 번호와 보너스 번호가 중복되면 예외 발생")
-    void Duplicate_Lotto_Number_And_Bonus_Number_Should_Throw_Exception() {
-        List<Integer> input = List.of(1,2,3,4,5,6);
-        Lotto lotto = new Lotto(input);
-        int bonus = 3;
-
-        assertThatThrownBy(() -> InputValidator.validateDuplicateBonus(lotto, bonus))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageStartingWith("[ERROR]");
-    }
 }

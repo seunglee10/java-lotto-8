@@ -72,16 +72,5 @@ public class InputValidator {
         return numberList;
     }
 
-    public static void validateDuplicateLotto(List<Integer> numbers){
-        Set<Integer> uniqueNumbers = new HashSet<>(numbers);
-        if (uniqueNumbers.size() != numbers.size()) {
-            throw new LottoException(ErrorCode.ERROR_LOTTO_NUMBER_DUPLICATE);
-        }
-    }
 
-    public static void validateDuplicateBonus(Lotto lotto, int bonus){
-        if(lotto.getNumbers().contains(bonus)) {
-            throw new LottoException(ErrorCode.ERROR_BONUS_NUMBER_DUPLICATE);
-        }
-    }
 }

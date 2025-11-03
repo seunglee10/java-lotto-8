@@ -4,7 +4,7 @@ import java.util.List;
 
 import static lotto.validator.InputValidator.*;
 
-public class Parser {
+public class InputParser {
     public static int parsePurchaseAmount(String input) {
         validateEmpty(input);
         int purchaseAmount = validateNumeric(input);
@@ -20,7 +20,6 @@ public class Parser {
         validateLottoEmpty(splitInput);
         List<Integer> lottoList = validateLottoNumeric(splitInput);
         validateLottoNumbers(lottoList);
-        validateDuplicateLotto(lottoList);
         return lottoList;
     }
 
