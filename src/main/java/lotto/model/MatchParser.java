@@ -3,30 +3,25 @@ package lotto.model;
 import java.util.*;
 
 public class MatchParser {
-    public Map<String, Object> getMatchCount(Lotto lotto, Lotto winningLotto, int bonus) {
-        List<Integer> numbers = lotto.getNumbers();
+    public LottoWinning getMatchCount(Lotto lotto, Lotto winningLotto, int bonus) {
+        List<Integer> lottoNumbers = lotto.getNumbers();
         List<Integer> winningNumbers = winningLotto.getNumbers();
 
-        Set<Integer> lottoMatch = new HashSet<>(numbers);
+        Set<Integer> lottoMatch = new HashSet<>(lottoNumbers);
         long matchCount = winningNumbers.stream().filter(lottoMatch::contains).count();
-        boolean bonusMatch = getMatchBonus(lotto, bonus);
-
-        Map<String, Object> result = new HashMap<>();
-        result.put("matchCount", matchCount);
-        result.put("bonusMatch", bonusMatch);
-        return result;
+        boolean bonusMatch = getMatchBonus(lottoNumbers, bonus);
+        return LottoWinning.of((int) matchCount, bonusMatch);
     }
 
-    public List<Map<String, Object>> getMatchCounts(List<Lotto> lottos, Lotto winningLotto, int bonus) {
-        List<Map<String, Object>> matchCounts = new ArrayList<>();
+    public List<LottoWinning> getMatchCounts(List<Lotto> lottos, Lotto winningLotto, int bonus) {
+        List<LottoWinning> matchCounts = new ArrayList<>();
         for (Lotto lotto : lottos) {
             matchCounts.add(getMatchCount(lotto, winningLotto, bonus));
         }
         return matchCounts;
     }
 
-    public boolean getMatchBonus(Lotto lotto, int bonus) {
-        List<Integer> numbers = lotto.getNumbers();
+    public boolean getMatchBonus(List<Integer> numbers, int bonus) {
         return numbers.contains(bonus);
     }
 }

@@ -1,6 +1,9 @@
 package lotto.model;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 public enum LottoWinning {
     FIRST(6, false, 2_000_000),
@@ -14,14 +17,17 @@ public enum LottoWinning {
     private final boolean matchBonus;
     private final int prize;
 
+
     LottoWinning(int matchCount, boolean Matchbonus, int prize) {
         this.matchCount = matchCount;
         this.matchBonus = Matchbonus;
         this.prize = prize;
     }
 
+
     public int getPrize() {
         return prize;
+
     }
 
     public static LottoWinning of(int matchCount, boolean bonusMatch) {

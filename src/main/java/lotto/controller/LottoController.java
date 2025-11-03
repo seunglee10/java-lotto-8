@@ -6,6 +6,7 @@ import java.util.Map;
 import lotto.factory.LottoFactory;
 import lotto.model.*;
 import lotto.view.InputView;
+import lotto.view.OutputView;
 
 import static lotto.model.InputParser.*;
 
@@ -18,6 +19,9 @@ public class LottoController {
         String parsePurchaseAmountInput = inputView.PurchaseAmount();
         int lottoCount = parsePurchaseAmount(parsePurchaseAmountInput);
 
+        LottoFactory lottofactory = new LottoFactory();
+        List<Lotto> lottos = lottofactory.generateLottos(lottoCount);
+
         String winningNumberInput = inputView.WinningNumber();
         List<Integer> WinningNumber = parseLotto(winningNumberInput);
         Lotto winningLotto = new Lotto(WinningNumber);
@@ -27,11 +31,17 @@ public class LottoController {
 
         winningLotto.validateDuplicateBonus(winningLotto, bonus);
 
-        LottoFactory lottofactory = new LottoFactory();
-        List<Lotto> lottos = lottofactory.generateLottos(lottoCount);
-
         MatchParser matchParser = new MatchParser();
-        List<Map<String, Object>> matchResults = matchParser.getMatchCounts(lottos, winningLotto, bonus);
+        List<LottoWinning> matchResults = matchParser.getMatchCounts(lottos, winningLotto, bonus);
+
+        WinningStatistics winningStatistics = new WinningStatistics(matchResults);
+        OutputView.PrintWinningRate(winningStatistics.WinningRate(lottoCount*1000));
+
+        // <등수, 몇명>
+        // matchResult 로 구해야함
+        // matchResult 를 하나 넣고, n등에 +1명 hash에서 "2등을 가져올 떄 없다면 0을 디폴트로 "
+        //
+        //
 
     }
 }
